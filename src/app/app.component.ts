@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,25 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Profimontaleks';
+  items: MenuItem[];
+
+  ngOnInit(): void {
+    this.items = [
+      {
+        label: 'Home',
+        icon: 'pi pi-fw pi-home',
+        routerLink: ['']
+      },
+      {
+        label: 'Workers',
+        icon: 'pi pi-fw pi-users',
+        routerLink: ['workers']
+      },
+      {
+        label: 'Product Cardboards',
+        icon: 'pi pi-fw pi-box',
+        routerLink: ['cardboards']
+      }
+    ];
+  }
 }

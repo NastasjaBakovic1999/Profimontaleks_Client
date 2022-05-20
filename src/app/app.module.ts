@@ -8,12 +8,12 @@ import { WorkerDetailComponent } from './worker/worker-detail/worker-detail.comp
 import { CardboardListComponent } from './productCardboard/cardboard-list/cardboard-list.component';
 import { CardboardDetailComponent } from './productCardboard/cardboard-detail/cardboard-detail.component';
 import { HomeComponent } from './home/home.component';
-import { MenubarModule } from 'primeng/menubar';
+import { Menubar, MenubarModule } from 'primeng/menubar';
 import { SkeletonModule } from 'primeng/skeleton';
 import { ButtonModule } from "primeng/button";
 import { BadgeModule } from "primeng/badge";
 import { TableModule } from "primeng/table";
-import { NavComponent } from './nav/nav.component';
+import { HttpClientModule } from  '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,6 @@ import { NavComponent } from './nav/nav.component';
     CardboardListComponent,
     CardboardDetailComponent,
     HomeComponent,
-    NavComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,7 +31,8 @@ import { NavComponent } from './nav/nav.component';
     SkeletonModule,
     ButtonModule,
     BadgeModule,
-    TableModule
+    TableModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
