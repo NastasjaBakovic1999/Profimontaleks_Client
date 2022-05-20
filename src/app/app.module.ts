@@ -7,6 +7,13 @@ import { WorkerListComponent } from './worker/worker-list/worker-list.component'
 import { WorkerDetailComponent } from './worker/worker-detail/worker-detail.component';
 import { CardboardListComponent } from './productCardboard/cardboard-list/cardboard-list.component';
 import { CardboardDetailComponent } from './productCardboard/cardboard-detail/cardboard-detail.component';
+import { HomeComponent } from './home/home.component';
+import { MenubarModule } from 'primeng/menubar';
+import { SkeletonModule } from 'primeng/skeleton';
+import { ButtonModule } from "primeng/button";
+import { BadgeModule } from "primeng/badge";
+import { TableModule } from "primeng/table";
+import { NavComponent } from './nav/nav.component';
 
 @NgModule({
   declarations: [
@@ -14,11 +21,18 @@ import { CardboardDetailComponent } from './productCardboard/cardboard-detail/ca
     WorkerListComponent,
     WorkerDetailComponent,
     CardboardListComponent,
-    CardboardDetailComponent
+    CardboardDetailComponent,
+    HomeComponent,
+    NavComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MenubarModule,
+    SkeletonModule,
+    ButtonModule,
+    BadgeModule,
+    TableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
