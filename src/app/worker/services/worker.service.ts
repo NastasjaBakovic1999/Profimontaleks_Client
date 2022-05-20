@@ -23,21 +23,21 @@ export class WorkerService {
   }
 
   getWorkers(): Observable<Worker[]> {
-    return this.http.get<Worker[]>(`${this.apiUrl}/worker/get-workers`)
+    return this.http.get<Worker[]>(`${this.apiUrl}worker/get-workers`)
       .pipe(
         catchError(this.handleError<Worker[]>(`An error occurred while trying to retrieve the data`))
       );
   }
 
   getWorkerStatuses(): Observable<WorkerStatus[]> {
-    return this.http.get<WorkerStatus[]>(`${this.apiUrl}/worker-status/get-worker-statuses`)
+    return this.http.get<WorkerStatus[]>(`${this.apiUrl}worker-status/get-worker-statuses`)
       .pipe(
         catchError(this.handleError<WorkerStatus[]>(`An error occurred while trying to retrieve the data`))
       );
   }
 
   getPositions(): Observable<Position[]> {
-    return this.http.get<Position[]>(`${this.apiUrl}/position/get-positions`)
+    return this.http.get<Position[]>(`${this.apiUrl}position/get-positions`)
     .pipe(
       catchError(this.handleError<Position[]>(`An error occurred while trying to retrieve the data`))
     );

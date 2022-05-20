@@ -14,6 +14,9 @@ import { ButtonModule } from "primeng/button";
 import { BadgeModule } from "primeng/badge";
 import { TableModule } from "primeng/table";
 import { HttpClientModule } from  '@angular/common/http';
+import { FormBuilder } from '@angular/forms';
+import { MessageService } from 'primeng/api';
+import { DatePipe, DecimalPipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,7 @@ import { HttpClientModule } from  '@angular/common/http';
     TableModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [FormBuilder, MessageService, DecimalPipe, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

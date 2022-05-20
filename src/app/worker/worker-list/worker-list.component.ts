@@ -1,13 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { DatePipe, DecimalPipe, registerLocaleData } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { Table } from 'primeng/table';
-import { forkJoin } from 'rxjs';
-import { Position } from '../models/position';
+import { forkJoin, Subject } from 'rxjs';
 import { Worker } from '../models/worker';
-import { WorkerStatus } from '../models/workerStatus';
+import localeDe from '@angular/common/locales/de';
 import { WorkerService } from '../services/worker.service';
 
 @Component({
@@ -17,17 +16,16 @@ import { WorkerService } from '../services/worker.service';
 })
 export class WorkerListComponent implements OnInit {
 
+  private ngUnsubscribe: Subject<any> = new Subject<any>();
   cols: any[];
   form: FormGroup;
   loading = true;
-  @ViewChild('dt') private dt: Table;
   workers: Worker[] = [];
-  workerStatuses: WorkerStatus[] = [];
-  positions: Position[] = [];
 
   constructor(
     private router: Router,
-    private fb: FormBuilder,
+    private decimalPipe: DecimalPipe,
+    private datePipe: DatePipe,
     private messageService: MessageService,
     private titleService: Title,
     private workerService: WorkerService
@@ -37,6 +35,13 @@ export class WorkerListComponent implements OnInit {
     this.setTitle(`Workers`);
     this.initServices();
     this.initCols();
+    registerLocaleData(localeDe, 'de-DE');
+  }
+
+  ngOnDestroy() {
+    this.setTitle(`Delight`);
+    this.ngUnsubscribe.next(true);
+    this.ngUnsubscribe.complete();
   }
 
   setTitle(title: string): void {
@@ -46,31 +51,44 @@ export class WorkerListComponent implements OnInit {
   initServices(): void {
     forkJoin([
       this.workerService.getWorkers(),
-      this.workerService.getWorkerStatuses(),
-      this.workerService.getPositions(),
-    ]).subscribe((data) => {
-      this.workers = data[0];
-      this.workerStatuses = data[1];
-      this.positions = data[2];
-    });
+    ]).subscribe(
+      (data) => {
+        this.workers = data[0];
+      },
+      error => {
+        this.messageService.add({ severity: 'error', sticky: true, detail: error.message });
+      },
+      () => {
+        this.loading = false;
+      }
+    );
   }
 
   initCols() {
     this.cols = [
       { field: 'jmbg', header: 'JMBG' },
-      { field: 'coefficient', header: 'Coefficient' },
+      { field: 'coefficient', header: 'Coefficient', format: '', pipeType: 'number' },
       { field: 'nameAndSurname', header: 'Name' },
-      { field: 'dateOfEmployment', header: 'Date Of Employment' },
+      { field: 'dateOfEmployment', header: 'Date Of Employment', format: 'dd.MM.yyyy', pipeType: 'date' },
       { field: 'status.description', header: 'Status' },
       { field: 'position.description', header: 'Position' }
     ];
   }
 
+  transform(data, pipe, pipeType) {
+    if (data == null || data == 'undefined') return '';
+    switch (pipeType) {
+      case 'number': return this.decimalPipe.transform(data, pipe, 'de-DE');
+      case 'date': return this.datePipe.transform(data, pipe);
+    }
+    return data;
+  }
+
   addNew() {
-    this.router.navigate(['crm/accounts/new']);
+    this.router.navigate(['workers/new']);
   }
 
   onRowSelect(event) {
-    this.router.navigate(['crm/accounts', event.data.id]);
+    this.router.navigate(['workers', event.data.id]);
   }
 }
