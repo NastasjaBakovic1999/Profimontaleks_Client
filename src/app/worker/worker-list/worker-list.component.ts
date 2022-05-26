@@ -18,7 +18,6 @@ export class WorkerListComponent implements OnInit {
 
   private ngUnsubscribe: Subject<any> = new Subject<any>();
   cols: any[];
-  form: FormGroup;
   loading = true;
   workers: Worker[] = [];
 
@@ -39,7 +38,7 @@ export class WorkerListComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.setTitle(`Delight`);
+    this.setTitle(`Workers`);
     this.ngUnsubscribe.next(true);
     this.ngUnsubscribe.complete();
   }

@@ -1,0 +1,17 @@
+::ng-deep .ui-grid-row {
+    margin: 10px 10px;
+}
+
+::ng-deep .ui-grid-col-2 {
+    margin: 5px 0px;
+}
+
+::ng-deep .submit-button {
+    margin: 10px 10px;
+    width: 10%;
+    height: 50px;
+}
+
+::ng-deep .my-drop {
+    width: 80px;
+}
