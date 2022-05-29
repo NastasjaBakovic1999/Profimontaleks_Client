@@ -38,8 +38,8 @@ export class WorkerDetailComponent implements OnInit {
 
   initForm(): void {
     this.entityForm = this.formBuilder.group({
-      jmbg: ['', [Validators.required, Validators.maxLength(13)]],
-      coefficient: ['', Validators.required],
+      jmbg: ['', [Validators.required, Validators.minLength(13), Validators.maxLength(13)]],
+      coefficient: ['', [Validators.required, Validators.max(10), Validators.min(5)]],
       nameAndSurname: ['', Validators.required],
       dateOfEmployment: ['', Validators.required],
       statusId: ['', Validators.required],
