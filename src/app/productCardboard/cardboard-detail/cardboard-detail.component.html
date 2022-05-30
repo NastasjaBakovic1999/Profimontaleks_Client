@@ -1,1 +1,91 @@
-<p>cardboard-detail works!</p>
+<div class="card card-w-title content" *ngIf="entityForm">
+    <div class="ui-g-12 ui-md-12">
+        <form [formGroup]="entityForm">
+            <p-panel header="Worker">
+                <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 30px 30px">
+
+                    <div class="ui-grid-row">
+                        <div class="ui-grid-col-1"></div>
+                        <div class="ui-grid-col-2">JMBG*:</div>
+                        <div class="ui-grid-col-9">
+                            <input formControlName="jmbg" pInputText type="text" placeholder="JMBG"
+                                [readonly]="!isNew" />
+                            <div *ngIf="(entityForm.controls['jmbg'].invalid 
+                                         && (entityForm.controls['jmbg'].touched
+                                       ||entityForm.controls['jmbg'].dirty))">
+                                <p style="color: red">JMBG is required, cannot have more than 13 characters
+                                    and cannot contain characters.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui-grid-row">
+                        <div class="ui-grid-col-1"></div>
+                        <div class="ui-grid-col-2">Coefficient*:</div>
+                        <div class="ui-grid-col-9">
+                            <input formControlName="coefficient" pInputText type="text" placeholder="Coefficient" />
+                            <div *ngIf="(entityForm.controls['coefficient'].invalid 
+                                         && (entityForm.controls['coefficient'].touched
+                                       ||entityForm.controls['coefficient'].dirty))">
+                                <p style="color: red"> Coefficient is required and must be in the range of 5 to 10! </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui-grid-row">
+                        <div class="ui-grid-col-1"></div>
+                        <div class="ui-grid-col-2">Name and Surname*:</div>
+                        <div class="ui-grid-col-9">
+                            <input formControlName="nameAndSurname" pInputText type="text"
+                                placeholder="Name and surname" />
+                            <div *ngIf="(entityForm.controls['nameAndSurname'].invalid 
+                                         && (entityForm.controls['nameAndSurname'].touched
+                                       ||entityForm.controls['nameAndSurname'].dirty))">
+                                <p style="color: red">Name and Surname is required! </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui-grid-row">
+                        <div class="ui-grid-col-1"></div>
+                        <div class="ui-grid-col-2">Date Of Employment*:</div>
+                        <div class="ui-grid-col-9">
+                            <p-calendar appendTo="body" placeholder="Date Of Employment"
+                                formControlName="dateOfEmployment" [showButtonBar]="true" [showIcon]="true"
+                                dateFormat="dd.mm.yy">
+                            </p-calendar>
+                        </div>
+                    </div>
+
+                    <div class="ui-grid-row">
+                        <div class="ui-grid-col-1"></div>
+                        <div class="ui-grid-col-2">Status*:</div>
+                        <div class="ui-grid-col-9">
+                            <p-dropdown [options]="statuses" placeholder="Worker Status" optionLabel="description"
+                                optionValue="id" formControlName="statusId" class="my-drop">
+                            </p-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="ui-grid-row" style="margin: 20px 10px">
+                        <div class="ui-grid-col-1"></div>
+                        <div class="ui-grid-col-2">Position*:</div>
+                        <div class="ui-grid-col-9">
+                            <p-dropdown [options]="positions" placeholder="Worker Position" optionLabel="description"
+                                optionValue="id" formControlName="positionId" class="my-drop">
+                            </p-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="ui-grid-row">
+                        <div class="ui-grid-col-12">
+                            <button pButton type="button" label="SAVE" icon="pi pi-save" iconPos="left"
+                                 [disabled]="entityForm.invalid" class="submit-button" (click)="onSave()"></button>
+                        </div>
+                    </div>
+                </div>
+            </p-panel>
+        </form>
+    </div>
+</div>
