@@ -1,4 +1,4 @@
-export class Phase {
+export class PhaseStatus {
     id: number;
     descripiton: string;
 }

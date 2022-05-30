@@ -54,8 +54,8 @@ export class CardboardListComponent implements OnInit {
 
   initCols() {
     this.cols = [
-      { field: 'pCCNumber', header: 'PCC Number' },
-      { field: 'startDate', header: 'Start Date', format: '', pipeType: 'number' },
+      { field: 'pccNumber', header: 'PCC Number' },
+      { field: 'startDate', header: 'Start Date', format: 'dd.MM.yyyy', pipeType: 'date' },
       { field: 'endDate', header: 'End Date', format: 'dd.MM.yyyy', pipeType: 'date' },
       { field: 'product.type.description', header: 'Product' }
     ];
@@ -79,6 +79,6 @@ export class CardboardListComponent implements OnInit {
   }
 
   onRowSelect(event) {
-    this.router.navigate(['cardboards', event.data.id]);
+    this.router.navigate(['cardboards', event.data.pccNumber]);
   }
 }

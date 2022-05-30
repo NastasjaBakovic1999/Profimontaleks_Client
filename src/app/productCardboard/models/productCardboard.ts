@@ -1,11 +1,12 @@
 import { Phase } from "./phase";
 import { Product } from "./product";
+import { ProductCardboardPhase } from "./productCardboardPhase";
 
 export class ProductCardboard{
-    pCCNumber: number;
+    pccNumber: number;
     productId: number;
     startDate: Date;
     endDate: Date;
     product: Product;
-    phases: Phase[];
+    phases: ProductCardboardPhase[];
 }
