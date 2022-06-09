@@ -7,6 +7,7 @@ import { forkJoin } from 'rxjs';
 import { Position } from '../models/position';
 import { Worker } from '../models/worker';
 import { WorkerStatus } from '../models/workerStatus';
+import { WorkerUpdateModel } from '../models/workerUpdateModel';
 import { WorkerService } from '../services/worker.service';
 
 @Component({
@@ -20,6 +21,7 @@ export class WorkerDetailComponent implements OnInit {
   isNew: boolean;
   progressBar: boolean;
   worker: Worker = new Worker();
+  updateWorker = new WorkerUpdateModel();
   entityForm: FormGroup;
   statuses: WorkerStatus[] = [];
   positions: Position[] = [];
@@ -135,14 +137,15 @@ export class WorkerDetailComponent implements OnInit {
   }
 
   update(): void {
-    this.worker = Object.assign(this.worker, this.entityForm.value);
-    this.worker.workerStatusId = this.entityForm.get('statusId').value;
-    this.worker.positionId = this.entityForm.get('positionId').value;
+    this.updateWorker = Object.assign(this.updateWorker, this.entityForm.value);
+    this.updateWorker.id = this.worker.id;
+    this.updateWorker.workerStatusId = this.entityForm.get('statusId').value;
+    this.updateWorker.positionId = this.entityForm.get('positionId').value;
 
-    this.workerService.updateWorker(this.worker).subscribe(
+    this.workerService.updateWorker(this.updateWorker).subscribe(
       () => { },
       error => {
-        this.displayErrorMessage(error);
+        this.displayErrorMessage(error.error);
         this.progressBar = false;
       },
       () => {
@@ -153,7 +156,7 @@ export class WorkerDetailComponent implements OnInit {
   }
 
   displayErrorMessage(errorMessage): void {
-    if(errorMessage.includes('Invalid entry!') &&  this.entityForm.get('dateOfEmployment').value > new Date()){
+    if(errorMessage.includes('Invalid entry!') &&  new Date(this.entityForm.get('dateOfEmployment').value) > new Date()){
       this.confirmationService.confirm({
         header: 'Warning',
         message: 'Date of Employment cannot be in the future!',

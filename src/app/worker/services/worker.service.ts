@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { Position } from '../models/position';
 import { Worker } from '../models/worker';
 import { WorkerStatus } from '../models/workerStatus';
+import { WorkerUpdateModel } from '../models/workerUpdateModel';
 
 
 @Injectable({
@@ -58,7 +59,7 @@ export class WorkerService {
     );
   }
 
-  updateWorker(worker: Worker) {
+  updateWorker(worker: WorkerUpdateModel) {
     return this.http.put(`${this.apiUrl}worker/update-worker/${worker.id}`, worker)
       .pipe(
         tap(_ => this.log('success', 'You have successfully updated worker')),

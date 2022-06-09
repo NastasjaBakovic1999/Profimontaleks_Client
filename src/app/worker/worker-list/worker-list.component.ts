@@ -69,8 +69,8 @@ export class WorkerListComponent implements OnInit {
       { field: 'coefficient', header: 'Coefficient', format: '', pipeType: 'number' },
       { field: 'nameAndSurname', header: 'Name' },
       { field: 'dateOfEmployment', header: 'Date Of Employment', format: 'dd.MM.yyyy', pipeType: 'date' },
-      { field: 'status.description', header: 'Status' },
-      { field: 'position.description', header: 'Position' }
+      { field: 'status', header: 'Status' },
+      { field: 'position', header: 'Position' }
     ];
   }
 

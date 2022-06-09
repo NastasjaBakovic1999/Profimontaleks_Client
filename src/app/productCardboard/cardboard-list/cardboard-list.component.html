@@ -5,9 +5,8 @@
                 <div class="ui-grid-row">
                     <div class="ui-g-12 ui-md-12">
                         <p-table #dt [columns]="cols" [value]="productCardboards" paginatorDropdownAppendTo="body"
-                            [rowExpandMode]="'multiple'" dataKey="pccNumber" [rowsPerPageOptions]="[10,20,50]"
-                            [paginator]="true" selectionMode="single" [autoLayout]="true" [loading]="loading"
-                            (onRowSelect)="onRowSelect($event)" columnResizeMode="expand" [lazy]="true"
+                            [rowExpandMode]="'multiple'" dataKey="pccNumber" selectionMode="single" [autoLayout]="true" 
+                            [loading]="loading" (onRowSelect)="onRowSelect($event)" columnResizeMode="expand" [lazy]="true"
                             (onLazyLoad)="initServices()">
                             <ng-template pTemplate="caption">
                                 <div class="ui-grid-row">
