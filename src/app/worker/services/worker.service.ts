@@ -70,7 +70,7 @@ export class WorkerService {
     return (error: any): Observable<T> => {
       console.error(error);
       this.log('error', `${operation} `);
-      return throwError(new Error());
+      return throwError(error);
     };
   }
 

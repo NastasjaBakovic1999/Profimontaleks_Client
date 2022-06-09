@@ -8,6 +8,7 @@ import { PhaseStatus } from '../models/phaseStatus';
 import { Product } from '../models/product';
 import { ProductCardboard } from '../models/productCardboard';
 import { ProductCardboardPhase } from '../models/productCardboardPhase';
+import { ProductType } from '../models/productType';
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +56,13 @@ export class ProductCardboardService {
     return this.http.get<PhaseStatus[]>(`${this.apiUrl}phase-status/get-phase-statuses`)
       .pipe(
         catchError(this.handleError<PhaseStatus[]>(`An error occurred while trying to retrieve the data`))
+      );
+  }
+
+  getProductTypes(): Observable<ProductType[]> {
+    return this.http.get<ProductType[]>(`${this.apiUrl}phase-status/get-phase-statuses`)
+      .pipe(
+        catchError(this.handleError<ProductType[]>(`An error occurred while trying to retrieve the data`))
       );
   }
 

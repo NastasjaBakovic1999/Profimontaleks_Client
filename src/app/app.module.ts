@@ -15,13 +15,16 @@ import { BadgeModule } from "primeng/badge";
 import { TableModule } from "primeng/table";
 import { HttpClientModule } from '@angular/common/http';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { CalendarModule } from 'primeng/calendar';
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { DropdownModule } from 'primeng/dropdown';
 import {PanelModule} from 'primeng/panel';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {InputTextModule} from 'primeng/inputtext';
+import { WorkerService } from './worker/services/worker.service';
+import { ProductCardboardService } from './productCardboard/services/product-cardboard.service';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
 
 @NgModule({
@@ -48,9 +51,18 @@ import {InputTextModule} from 'primeng/inputtext';
     PanelModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    InputTextModule
+    InputTextModule,
+    ConfirmDialogModule
   ],
-  providers: [FormBuilder, MessageService, DecimalPipe, DatePipe],
+  providers: [
+    FormBuilder, 
+    MessageService, 
+    ConfirmationService, 
+    WorkerService, 
+    ProductCardboardService, 
+    DecimalPipe, 
+    DatePipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

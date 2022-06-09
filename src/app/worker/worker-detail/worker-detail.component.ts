@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmationService } from 'primeng/api';
 import { forkJoin } from 'rxjs';
 import { Position } from '../models/position';
 import { Worker } from '../models/worker';
@@ -29,6 +30,7 @@ export class WorkerDetailComponent implements OnInit {
     private titleService: Title,
     private workerService: WorkerService,
     private router: Router,
+    private confirmationService: ConfirmationService
   ) { }
 
   ngOnInit(): void {
@@ -122,7 +124,7 @@ export class WorkerDetailComponent implements OnInit {
     this.workerService.createWorker(newWorker).subscribe(
       () => {},
       error => {
-        console.error(error);
+        this.displayErrorMessage(error.error);
         this.progressBar = false;
       },
       () => {
@@ -140,7 +142,7 @@ export class WorkerDetailComponent implements OnInit {
     this.workerService.updateWorker(this.worker).subscribe(
       () => { },
       error => {
-        console.error(error);
+        this.displayErrorMessage(error);
         this.progressBar = false;
       },
       () => {
@@ -150,6 +152,38 @@ export class WorkerDetailComponent implements OnInit {
     );
   }
 
+  displayErrorMessage(errorMessage): void {
+    if(errorMessage.includes('Invalid entry!') &&  this.entityForm.get('dateOfEmployment').value > new Date()){
+      this.confirmationService.confirm({
+        header: 'Warning',
+        message: 'Date of Employment cannot be in the future!',
+        acceptVisible: false,
+        rejectLabel: 'Close',
+        reject: () => {
+        }
+      });
+    } else {
+      this.confirmationService.confirm({
+        header: 'Warning',
+        message: 'Invalid entry!',
+        acceptVisible: false,
+        rejectLabel: 'Close',
+        reject: () => {
+        }
+      });
+    }
+
+    if(errorMessage.includes('Already exist!')){
+      this.confirmationService.confirm({
+        header: 'Warning',
+        message: 'The worker with the entered JMBG already exists!',
+        acceptVisible: false,
+        rejectLabel: 'Close',
+        reject: () => {
+        }
+      });
+    }
+  }
 
 }
 
