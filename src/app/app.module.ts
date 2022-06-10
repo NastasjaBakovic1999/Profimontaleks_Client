@@ -19,14 +19,15 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { CalendarModule } from 'primeng/calendar';
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { DropdownModule } from 'primeng/dropdown';
-import {PanelModule} from 'primeng/panel';
+import { PanelModule } from 'primeng/panel';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {InputTextModule} from 'primeng/inputtext';
+import { InputTextModule } from 'primeng/inputtext';
 import { WorkerService } from './worker/services/worker.service';
 import { ProductCardboardService } from './productCardboard/services/product-cardboard.service';
-import {ConfirmDialogModule} from 'primeng/confirmdialog';
-import {DividerModule} from 'primeng/divider';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DividerModule } from 'primeng/divider';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ToastModule } from 'primeng/toast';
 
 
 @NgModule({
@@ -57,15 +58,16 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     InputTextModule,
     ConfirmDialogModule,
     DividerModule,
-    NgbModule
+    NgbModule,
+    ToastModule
   ],
   providers: [
-    FormBuilder, 
-    MessageService, 
-    ConfirmationService, 
-    WorkerService, 
-    ProductCardboardService, 
-    DecimalPipe, 
+    FormBuilder,
+    MessageService,
+    ConfirmationService,
+    WorkerService,
+    ProductCardboardService,
+    DecimalPipe,
     DatePipe
   ],
   bootstrap: [AppComponent]

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { catchError, Observable, throwError } from 'rxjs';
@@ -9,6 +9,8 @@ import { Product } from '../models/product';
 import { ProductCardboard } from '../models/productCardboard';
 import { ProductCardboardPhase } from '../models/productCardboardPhase';
 import { ProductType } from '../models/productType';
+
+const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
 @Injectable({
   providedIn: 'root'
@@ -71,6 +73,24 @@ export class ProductCardboardService {
       .pipe(
         catchError(this.handleError<ProductCardboardPhase[]>(`An error occurred while trying to retrieve the data`))
       );
+  }
+
+  deletePhase(ids: number[]):Observable<any> {
+    const httpParams = new HttpParams({
+      fromObject: {
+       ids
+      }
+    });
+
+    const httpOptions = {
+      headers,
+      params: httpParams
+    };
+    
+    return this.http.delete(`${this.apiUrl}cardboard/delete-cardboard-phase`, httpOptions)
+    .pipe(
+      catchError(this.handleError<any[]>(`An error occurred while trying to delete the data`))
+    );
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

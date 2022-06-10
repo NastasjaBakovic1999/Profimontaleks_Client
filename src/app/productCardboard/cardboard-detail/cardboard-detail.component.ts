@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { forkJoin } from 'rxjs';
 import { Phase } from '../models/phase';
 import { PhaseStatus } from '../models/phaseStatus';
@@ -22,6 +23,7 @@ export class CardboardDetailComponent implements OnInit {
   isNew: boolean;
   progressBar: boolean;
   productCardboard: ProductCardboard = new ProductCardboard();
+  productCardboardPhases: ProductCardboardPhase[] = [];
   entityForm: FormGroup;
   phaseForm: FormGroup;
   products: Product[] = [];
@@ -34,7 +36,9 @@ export class CardboardDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private titleService: Title,
     private router: Router,
-    private productCardboardService: ProductCardboardService
+    private productCardboardService: ProductCardboardService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -94,7 +98,7 @@ export class CardboardDetailComponent implements OnInit {
     ]).subscribe(
       response => {
         this.productCardboard = response[0],
-        this.productCardboard.phases = response[1]
+          this.productCardboardPhases = response[1]
       },
       () => {
         this.progressBar = false;
@@ -131,7 +135,59 @@ export class CardboardDetailComponent implements OnInit {
     );
   }
 
+  addPhase() {
+
+  }
+
+  editPhase(phase: ProductCardboardPhase) {
+    // this.product = { ...product };
+    // this.productDialog = true;
+  }
+
+  deletePhase(phase: ProductCardboardPhase) {
+    this.route.paramMap.subscribe(param => {
+      this.pccNumber = param.get('id');
+      this.isNew = this.pccNumber === 'new';
+      if (this.isNew) {
+        
+
+      } else {
+        this.confirmationService.confirm({
+          message: 'Are you sure you want to delete this phase?',
+          header: 'Confirm',
+          icon: 'pi pi-exclamation-triangle',
+          accept: () => {
+            let ids = [phase.pccNumber, phase.phaseId]
+            this.productCardboardService.deletePhase(ids).subscribe(
+              () => {},
+              error => {
+                this.displayErrorMessage(error.error);
+              },
+              () =>
+              {
+                this.initData()
+                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Phase Deleted', life: 3000 });
+              }
+            )
+          }
+        });
+      }
+    });
+  }
+
+  displayErrorMessage(errorMessage): void {
+    this.confirmationService.confirm({
+      header: 'Warning',
+      message: errorMessage,
+      acceptVisible: false,
+      rejectLabel: 'Close',
+      reject: () => {
+      }
+    });
+  }
+
   setTitle(title: string): void {
     this.titleService.setTitle(title);
   }
 }
+ 
