@@ -14,7 +14,7 @@ import { ButtonModule } from "primeng/button";
 import { BadgeModule } from "primeng/badge";
 import { TableModule } from "primeng/table";
 import { HttpClientModule } from '@angular/common/http';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { CalendarModule } from 'primeng/calendar';
 import { DatePipe, DecimalPipe } from '@angular/common';
@@ -25,6 +25,8 @@ import {InputTextModule} from 'primeng/inputtext';
 import { WorkerService } from './worker/services/worker.service';
 import { ProductCardboardService } from './productCardboard/services/product-cardboard.service';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {DividerModule} from 'primeng/divider';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -50,9 +52,12 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
     DropdownModule,
     PanelModule,
     ReactiveFormsModule,
+    FormsModule,
     BrowserAnimationsModule,
     InputTextModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    DividerModule,
+    NgbModule
   ],
   providers: [
     FormBuilder, 

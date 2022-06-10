@@ -57,7 +57,7 @@ export class CardboardListComponent implements OnInit {
       { field: 'pccNumber', header: 'PCC Number' },
       { field: 'startDate', header: 'Start Date', format: 'dd.MM.yyyy', pipeType: 'date' },
       { field: 'endDate', header: 'End Date', format: 'dd.MM.yyyy', pipeType: 'date' },
-      { field: 'product.type.description', header: 'Product' }
+      { field: 'product', header: 'Product' }
     ];
   }
 

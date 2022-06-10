@@ -1,113 +1,143 @@
-<div class="card card-w-title content" *ngIf="entityForm">
-    <div class="ui-g-12 ui-md-6">
-        <form [formGroup]="entityForm">
-            <p-panel header="Worker">
-                <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 30px 30px">
-
-                    <div class="ui-grid-row">
-                        <div class="ui-grid-col-1"></div>
-                        <div class="ui-grid-col-2">Product*:</div>
-                        <div class="ui-grid-col-9">
-                            <p-dropdown [options]="products" placeholder="Product"
-                                optionLabel="${type.description [weight, height, length]}" formControlName="productId"
-                                class="my-drop">
-                            </p-dropdown>
-                        </div>
-                    </div>
-
-                    <div class="ui-grid-row">
-                        <div class="ui-grid-col-1"></div>
-                        <div class="ui-grid-col-2">Product Type:</div>
-                        <div class="ui-grid-col-9">
-                            <input value="this.entityForm.productId.type.description" pInputText type="text" placeholder="Type"
-                                [readonly]="true" />
-                        </div>
-                    </div>
-                    <div class="ui-grid-row">
-                        <div class="ui-grid-col-1"></div>
-                        <div class="ui-grid-col-2">Product Weight:</div>
-                        <div class="ui-grid-col-9">
-                            <input value="this.entityForm.productId.weight" pInputText type="text"
-                                placeholder="Weight" [readonly]="true" />
-                        </div>
-                    </div>
-                    <div class="ui-grid-row">
-                        <div class="ui-grid-col-1"></div>
-                        <div class="ui-grid-col-2">Product Height:</div>
-                        <div class="ui-grid-col-9">
-                            <input value="this.entityForm.productId.height" pInputText type="text" placeholder="Height"
-                                [readonly]="true" />
-                        </div>
-                    </div>
-                    <div class="ui-grid-row">
-                        <div class="ui-grid-col-1"></div>
-                        <div class="ui-grid-col-2">Product Length:</div>
-                        <div class="ui-grid-col-9">
-                            <input value="this.entityForm.productId.length" pInputText type="text" placeholder="Length"
-                                [readonly]="true" />
-                        </div>
-                    </div>
-                    <div class="ui-grid-row">
-                        <div class="ui-grid-col-1"></div>
-                        <div class="ui-grid-col-2">Product Type:</div>
-                        <div class="ui-grid-col-9">
-                            <input value="this.entityForm.productId.type.color" pInputText type="text" placeholder="Colour"
-                                [readonly]="true" />
-                        </div>
-                    </div>
-
-                </div>
-            </p-panel>
-        </form>
-    </div>
-    <div class="ui-g-12 ui-md-6">
-        <form [formGroup]="entityForm">
-            <p-panel header="Worker">
-                <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 30px 30px">
-
-                    <div class="ui-grid-row">
-                        <div class="ui-grid-col-1"></div>
-                        <div class="ui-grid-col-2">Product Cardboard Number*:</div>
-                        <div class="ui-grid-col-9">
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <p-panel [showHeader]="false">
+                <form [formGroup]="entityForm">
+                    <div class="col-5">
+                        <div class="row">Product Cardboard Number*:</div>
+                        <div class="row">
                             <input formControlName="pccNumber" pInputText type="text"
                                 placeholder="Product Cardboard Number" [readonly]="true" />
                             <div *ngIf="(entityForm.controls['pccNumber'].invalid 
-                                         && (entityForm.controls['pccNumber'].touched
-                                       ||entityForm.controls['pccNumber'].dirty))">
+                                                     && (entityForm.controls['pccNumber'].touched
+                                                   ||entityForm.controls['pccNumber'].dirty))">
                                 <p style="color: red">Product Cardboard Number is required.
                                 </p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="ui-grid-row">
-                        <div class="ui-grid-col-1"></div>
-                        <div class="ui-grid-col-2">Start Date*:</div>
-                        <div class="ui-grid-col-9">
+                    <div class="col-5">
+                        <div class="row">Start Date*:</div>
+                        <div class="row">
                             <p-calendar appendTo="body" placeholder="Start Date" formControlName="startDate"
-                                [showButtonBar]="true" [showIcon]="true" dateFormat="dd.mm.yy">
+                                [showButtonBar]="true" [showIcon]="true" dataType="string">
                             </p-calendar>
                         </div>
                     </div>
 
-                    <div class="ui-grid-row">
-                        <div class="ui-grid-col-1"></div>
-                        <div class="ui-grid-col-2">End Date*:</div>
-                        <div class="ui-grid-col-9">
+                    <div class="col-5">
+                        <div class="row">End Date*:</div>
+                        <div class="row">
                             <p-calendar appendTo="body" placeholder="End Date" formControlName="endDate"
-                                [showButtonBar]="true" [showIcon]="true" dateFormat="dd.mm.yy">
+                                [showButtonBar]="true" [showIcon]="true" dataType="string">
                             </p-calendar>
                         </div>
                     </div>
 
-                    <div class="ui-grid-row">
-                        <div class="ui-grid-col-12">
+
+                    <div class="col-5">
+                        <div class="row">Product*:</div>
+                        <div class="row">
+                            <p-dropdown [options]="products" placeholder="Product" optionValue="id"
+                                formControlName="productId" optionLabel="Selected product"
+                                [(ngModel)]="this.selectedProduct">
+                                <ng-template pTemplate="item" let-item>
+                                    <div class="ui-helper-clearfix">
+                                        <div style="float:left;">
+                                            {{ item.type.description }}
+                                        </div>
+                                        <div style="float:left">
+                                            h: {{item.height}} cm; w: {{item.weight}} kg; l: {{item.length}} cm
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="col-5">
+                        <div class="row">Product Type:</div>
+                        <div class="row">
+                            <input formControlName="type" pInputText type="text" placeholder="Type" [readonly]="true" />
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="row">Product Weight (in kg):</div>
+                        <div class="row">
+                            <input formControlName="weight" pInputText type="text" placeholder="Weight"
+                                [readonly]="true" />
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="row">Product Height (in cm):</div>
+                        <div class="row">
+                            <input formControlName="height" pInputText type="text" placeholder="Height"
+                                [readonly]="true" />
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="row">Product Length (in cm):</div>
+                        <div class="row">
+                            <input formControlName="length" pInputText type="text" placeholder="Length"
+                                [readonly]="true" />
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="row">
                             <button pButton type="button" label="SAVE" icon="pi pi-save" iconPos="left"
                                 [disabled]="entityForm.invalid" class="submit-button"></button>
                         </div>
                     </div>
-                </div>
+                </form>
             </p-panel>
-        </form>
+        </div>
+        <div class="col-6">
+            <p-panel [showHeader]="false">
+                <form [formGroup]="phaseForm">
+                    <p-table #dt [value]="this.productCardboard.phases" [rowExpandMode]="'multiple'" dataKey="pccNumber"
+                        [autoLayout]="true" columnResizeMode="expand" [lazy]="true">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Phase</th>
+                                <th>Status</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-phases>
+                            <tr>
+                                <td>{{phases.phase.description}}</td>
+                                <td>{{phases.status.description}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+
+                    <div class="col-5">
+                        <div class="row">Phase*:</div>
+                        <div class="row">
+                            <p-dropdown [options]="phases" placeholder="Phase" optionValue="id"
+                                formControlName="phaseId" optionLabel="description">
+                            </p-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="col-5">
+                        <div class="row">Status*:</div>
+                        <div class="row">
+                            <p-dropdown [options]="statuses" placeholder="Status" optionValue="id"
+                                formControlName="statusId" optionLabel="description">
+                            </p-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="row">
+                            <button pButton type="button" label="ADD PHASE" icon="pi pi-plus-circle" iconPos="left"
+                                [disabled]="phaseForm.invalid" class="submit-button"></button>
+                        </div>
+                    </div>
+                </form>
+            </p-panel>
+        </div>
     </div>
 </div>

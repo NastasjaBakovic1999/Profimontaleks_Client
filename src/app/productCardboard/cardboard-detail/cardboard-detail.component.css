@@ -1,0 +1,12 @@
+::ng-deep .row {
+    margin: 10px 10px;
+}
+
+::ng-deep .col-5 {
+    margin: 5px 0px;
+}
+
+::ng-deep .submit-button {
+    margin: 10px 10px;
+    height: 50px;
+}
