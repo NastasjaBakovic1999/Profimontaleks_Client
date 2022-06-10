@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Phase } from '../models/phase';
 import { PhaseStatus } from '../models/phaseStatus';
@@ -37,6 +37,14 @@ export class ProductCardboardService {
     return this.http.get<ProductCardboard>(`${this.apiUrl}product-cardboards/get-cardboard/${pccNumber}`)
       .pipe(
         catchError(this.handleError<ProductCardboard>(`An error occurred while trying to retrieve the data`))
+      );
+  }
+
+  updateProductCardboard(productCardboard: ProductCardboard) {
+    return this.http.put(`${this.apiUrl}product-cardboards/update-cardboard/${productCardboard.pccNumber}`, productCardboard)
+      .pipe(
+        tap(_ => this.log('success', 'You have successfully updated product cardboard')),
+        catchError(this.handleError<ProductCardboard>(`An error occurred while trying to update product cardboard`))
       );
   }
 
@@ -104,6 +112,13 @@ export class ProductCardboardService {
     return this.http.post<ProductCardboardPhase[]>(`${this.apiUrl}cardboard/add-cardboard-phase`, phase)
     .pipe(
       catchError(this.handleError<ProductCardboardPhase[]>(`An error occurred while trying to retrieve the data`))
+    );
+  }
+
+  getPCCNumber() : Observable<any> {
+    return this.http.get<any[]>(`${this.apiUrl}product-cardboards/get-pccnumber`)
+    .pipe(
+      catchError(this.handleError<any[]>(`An error occurred while trying to retrieve the data`))
     );
   }
 
