@@ -93,6 +93,20 @@ export class ProductCardboardService {
     );
   }
 
+  updatePhase(phase: ProductCardboardPhase) : Observable<any> {
+    return this.http.put<ProductCardboardPhase[]>(`${this.apiUrl}cardboard/update-cardboard-phase`, phase)
+    .pipe(
+      catchError(this.handleError<ProductCardboardPhase[]>(`An error occurred while trying to retrieve the data`))
+    );
+  }
+
+  createPhase(phase: ProductCardboardPhase) : Observable<any> {
+    return this.http.post<ProductCardboardPhase[]>(`${this.apiUrl}cardboard/add-cardboard-phase`, phase)
+    .pipe(
+      catchError(this.handleError<ProductCardboardPhase[]>(`An error occurred while trying to retrieve the data`))
+    );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);

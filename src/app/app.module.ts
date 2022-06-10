@@ -28,6 +28,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DividerModule } from 'primeng/divider';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastModule } from 'primeng/toast';
+import {DialogModule} from 'primeng/dialog';
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { ToastModule } from 'primeng/toast';
     ConfirmDialogModule,
     DividerModule,
     NgbModule,
-    ToastModule
+    ToastModule,
+    DialogModule
   ],
   providers: [
     FormBuilder,
