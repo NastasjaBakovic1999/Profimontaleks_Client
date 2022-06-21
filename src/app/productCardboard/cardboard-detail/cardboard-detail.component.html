@@ -8,7 +8,7 @@
                         <div class="row">Product Cardboard Number*:</div>
                         <div class="row">
                             <input formControlName="pccNumber" pInputText type="text"
-                                placeholder="Product Cardboard Number" [readonly]="isNew" />
+                                placeholder="Product Cardboard Number" [readonly]="true" />
                             <div *ngIf="(entityForm.controls['pccNumber'].invalid 
                                                      && (entityForm.controls['pccNumber'].touched
                                                    ||entityForm.controls['pccNumber'].dirty))">

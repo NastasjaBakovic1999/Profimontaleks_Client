@@ -161,19 +161,25 @@ export class CardboardDetailComponent implements OnInit {
   }
 
   editPhase(phase: ProductCardboardPhase) {
-    this.route.paramMap.subscribe(param => {
-      this.pccNumber = param.get('id');
-      this.isNew = this.pccNumber === 'new';
-      if (this.isNew) {
+    // this.route.paramMap.subscribe(param => {
+    //   this.pccNumber = param.get('id');
+    //   this.isNew = this.pccNumber === 'new';
+
+    this.patchPhaseForm(phase);
+    this.header = "Edit Phase"
+    this.isEditing = true;
+    this.phaseDialog = true;
+
+    // if (this.isNew) {
 
 
-      } else {
-        this.patchPhaseForm(phase);
-        this.header = "Edit Phase"
-        this.isEditing = true;
-        this.phaseDialog = true;
-      }
-    });
+    // } else {
+    //   this.patchPhaseForm(phase);
+    //   this.header = "Edit Phase"
+    //   this.isEditing = true;
+    //   this.phaseDialog = true;
+    // }
+    // });
   }
 
   savePhase() {
@@ -181,8 +187,23 @@ export class CardboardDetailComponent implements OnInit {
       this.pccNumber = param.get('id');
       this.isNew = this.pccNumber === 'new';
       if (this.isNew) {
+        if (this.isEditing) {
+          let updatePhase = this.productCardboardPhases.find(p => p.pccNumber == this.entityForm.get('pccNumber').value && p.phaseId == this.phaseForm.get('phaseId').value);
+          updatePhase.statusId = this.phaseForm.get('statusId').value;
+          updatePhase.status = this.statuses.find(st => st.id == updatePhase.statusId);
 
+          this.phaseDialog = false;
+        } else {
+          let createPhase = new ProductCardboardPhase();
+          createPhase.pccNumber = this.entityForm.get('pccNumber').value;
+          createPhase.phaseId = this.phaseForm.get('phaseId').value;
+          createPhase.statusId = this.phaseForm.get('statusId').value;
+          createPhase.phase = this.phases.find(ph => ph.id == createPhase.phaseId);
+          createPhase.status = this.statuses.find(st => st.id == createPhase.statusId);
 
+          this.productCardboardPhases.push(createPhase);
+          this.phaseDialog = false;
+        }
       } else {
         if (this.isEditing) {
           let updatePhase = new ProductCardboardPhase();
@@ -227,8 +248,15 @@ export class CardboardDetailComponent implements OnInit {
       this.pccNumber = param.get('id');
       this.isNew = this.pccNumber === 'new';
       if (this.isNew) {
-
-
+        this.confirmationService.confirm({
+          message: 'Are you sure you want to delete this phase?',
+          header: 'Confirm',
+          icon: 'pi pi-exclamation-triangle',
+          accept: () => {
+            this.productCardboardPhases = this.productCardboardPhases.filter(p => p != phase);
+            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Phase Deleted', life: 3000 });
+          }
+        });
       } else {
         this.confirmationService.confirm({
           message: 'Are you sure you want to delete this phase?',
@@ -268,8 +296,36 @@ export class CardboardDetailComponent implements OnInit {
       this.pccNumber = param.get('id');
       this.isNew = this.pccNumber === 'new';
       if (this.isNew) {
+        let productCardboard = new ProductCardboard();
+        productCardboard.pccNumber = this.entityForm.get('pccNumber').value;
+        productCardboard.startDate = new Date(this.entityForm.get('startDate').value);
+        productCardboard.endDate = new Date(this.entityForm.get('endDate').value);
+        productCardboard.productId = this.entityForm.get('productId').value;
 
+        let phases = this.productCardboardPhases.map(function(phase) {
+          let p = new ProductCardboardPhase();
+          p.pccNumber = phase.pccNumber;
+          p.statusId = phase.statusId;
+          p.phaseId = phase.phaseId;
+          return p;
+        });
+        
+        productCardboard.phases = phases;
 
+        if (new Date(this.entityForm.get('startDate').value) > new Date(this.entityForm.get('endDate').value)) {
+          this.displayErrorMessage('Start Date cannot be greater than the End Date!');
+        } else {
+          this.productCardboardService.createProductCardboard(productCardboard).subscribe(
+            () => { },
+            error => {
+              this.progressBar = false;
+            },
+            () => {
+              this.progressBar = false;
+              this.router.navigate(['/cardboards']);
+            }
+          );
+        }
       } else {
         let productCardboard = new ProductCardboard();
         productCardboard = Object.assign(productCardboard, this.entityForm.value);

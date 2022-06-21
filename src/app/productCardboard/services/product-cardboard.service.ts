@@ -40,6 +40,13 @@ export class ProductCardboardService {
       );
   }
 
+  createProductCardboard(productCardboard: ProductCardboard) : Observable<any> {
+    return this.http.post<ProductCardboard[]>(`${this.apiUrl}product-cardboards/create-cardboard/`, productCardboard)
+    .pipe(
+      catchError(this.handleError<ProductCardboard[]>(`An error occurred while trying to retrieve the data`))
+    );
+  }
+
   updateProductCardboard(productCardboard: ProductCardboard) {
     return this.http.put(`${this.apiUrl}product-cardboards/update-cardboard/${productCardboard.pccNumber}`, productCardboard)
       .pipe(
